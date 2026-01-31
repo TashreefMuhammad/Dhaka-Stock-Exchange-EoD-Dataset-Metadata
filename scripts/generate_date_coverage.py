@@ -7,10 +7,17 @@ if __name__ == "__main__":
     # Load availability matrix
     # -----------------------------
     df = pd.read_csv("metadata/availability_matrix.csv")
-    df["Date"] = pd.to_datetime(df["Date"], dayfirst=True, format="mixed")
+
+    # IMPORTANT:
+    # Dates are day-first and may have mixed year width (DD-MM-YYYY / DD-MM-YY)
+    df["Date"] = pd.to_datetime(
+        df["Date"],
+        dayfirst=True,
+        format="mixed"
+    )
 
     tickers = df.columns[1:]  # exclude Date
-    total_instruments = len(tickers)
+    total_instruments = len(tickers)  # full dataset universe (constant)
 
     records = []
 
@@ -22,7 +29,7 @@ if __name__ == "__main__":
         available_adjusted = values.isin([1, 3]).sum()
         available_both = (values == 3).sum()
 
-        coverage_ratio = (
+        coverage_ratio_full = (
             available_both / total_instruments
             if total_instruments > 0 else 0
         )
@@ -34,12 +41,11 @@ if __name__ == "__main__":
             "Date": row["Date"].date(),
             "DayOfWeek": day_name,
             "IsWeekend": is_weekend,
-            "Total_Instruments": total_instruments,
-            "Available_Any": available_any,
-            "Available_Unadjusted": available_unadjusted,
-            "Available_Adjusted": available_adjusted,
-            "Available_Both": available_both,
-            "Coverage_Ratio": round(coverage_ratio, 4)
+            "Available_Any": int(available_any),
+            "Available_Unadjusted": int(available_unadjusted),
+            "Available_Adjusted": int(available_adjusted),
+            "Available_Both": int(available_both),
+            "Coverage_Ratio_Full": round(coverage_ratio_full, 4)
         })
 
     date_coverage = pd.DataFrame(records)
@@ -52,9 +58,4 @@ if __name__ == "__main__":
 
     print("Per-date coverage metadata generated.")
     print("Number of dates:", len(date_coverage))
-
-#%%
-avail = pd.read_csv("metadata/availability_matrix.csv")
-avail["Date"] = pd.to_datetime(df["Date"], dayfirst=True, format="mixed")
-
-print(avail.iloc[0]["Date"], avail.iloc[0]["Date"].strftime("%A"))
+    print("Total dataset instruments:", total_instruments)
