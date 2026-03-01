@@ -21,7 +21,7 @@ warnings.filterwarnings("ignore")
 # ==================================================
 
 TICKER = "AAMRANET"
-DATA_DIR = "data_sample"
+DATA_DIR = "data_sample/Unadjusted"
 RESULT_DIR = "results/tables"
 
 ARIMA_ORDER = (1, 0, 1)
