@@ -30,7 +30,7 @@ warnings.simplefilter("ignore", ConvergenceWarning)
 # Configuration
 # ==================================================
 TICKER = "SQURPHARMA"
-DATA_PATH = f"datasample/{TICKER}.csv"   # adjust if needed
+DATA_PATH = f"data_sample/Unadjusted/{TICKER}.csv"   # adjust if needed
 FIGURE_DIR = "figures"
 
 TRAIN_RATIO = 0.8
