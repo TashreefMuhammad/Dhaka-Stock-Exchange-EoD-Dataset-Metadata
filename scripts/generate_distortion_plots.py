@@ -5,6 +5,7 @@ for volatility distortion experiment
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib.lines as mlines
 import os
 
 # =====================================================
@@ -151,6 +152,20 @@ colors = ["#1f77b4", "#ff7f0e"]
 
 for patch, color in zip(box["boxes"], colors):
     patch.set_facecolor(color)
+
+# Legend elements
+mean_marker = mlines.Line2D([], [], color='green', marker='^',
+                            linestyle='None', markersize=8,
+                            label='Mean')
+
+median_line = mlines.Line2D([], [], color='black',
+                            label='Median')
+
+outlier_marker = mlines.Line2D([], [], color='black', marker='o',
+                               linestyle='None', markersize=5,
+                               label='Outliers')
+
+plt.legend(handles=[mean_marker, median_line, outlier_marker])
 
 plt.ylabel("Distortion (%)")
 
