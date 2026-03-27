@@ -96,7 +96,7 @@ df_full = pd.DataFrame(index=full_dates)
 df_full = df_full.join(prices_actual.rename("Close"))
 
 # Naive panel construction
-df_full["Close"] = df_full["Close"].ffill()
+df_full["Close"] = df_full["Close"].bfill()
 
 # Remove leading NaNs before first observation
 df_full = df_full.dropna()

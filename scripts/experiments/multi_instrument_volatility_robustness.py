@@ -126,7 +126,7 @@ for ticker in tqdm(tickers):
 
         df_full = df_full.join(prices.rename("Close"))
 
-        df_full["Close"] = df_full["Close"].ffill()
+        df_full["Close"] = df_full["Close"].bfill()
 
         df_full = df_full.dropna()
 
